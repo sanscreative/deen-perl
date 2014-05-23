@@ -1,7 +1,7 @@
 #!/usr/bin/perl -w
 
 =for comment
-#Copyright 2014@Santosh Dwivedi, All Rights Reserved.
+#Copyright 2014@Santosh Dwivedi(santosh@sanscreative.org), All Rights Reserved.
 #The code contained herein is licensed under the GNU General Public
 #License. You may obtain a copy of the GNU General Public License
 #Version 2 or later at the following locations:
@@ -12,8 +12,7 @@ Purpose:
 To encode and decode cpu register fields. useful when working with large number of registers.
 Requirement:
 Wx 
-More Read on http://www.cpan.org/modules/INSTALL.html
-Wx Installation:
+Wx Installation:Read More on http://www.cpan.org/modules/INSTALL.html
 On Windows:
 http://strawberryperl.com/ download installer and install 
 Install Wx on command line using cpan (comprehensive perl archive network)
@@ -378,9 +377,20 @@ sub show_bitfield_menu {
 	use Wx;
 	use wxPerl::Constructors;
 	use base 'Wx::App';
-
-	my $regname = $opt_d;
-	my $regval  = $opt_v;
+	my $regname;
+	my $regval =0;
+    if($opt_e)
+    {
+        $regname = $opt_e;
+    }elsif($opt_d)
+    {
+        $regname = $opt_d;
+    }
+	if($opt_v)
+	{
+		$regval  = $opt_v;
+	}
+	
 	my $frame   = wxPerl::Frame->new( undef, "Encode decode register $regname" );
 	$frame->SetMinSize( [ 100, 280 ] );
 	my $numgridcol = 16;
@@ -534,7 +544,7 @@ sub OnInit {
 	if ($opt_c) {
 		$ret = show_config_menu;
 	}
-	elsif ($opt_d) {
+	elsif ($opt_d || $opt_e) {
 		$ret = show_bitfield_menu;
 
 	}
